@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "topic": "stoichiometry",
+        "question": "How many moles are in 22 g of CO₂?",
+        "answer": 0.5,
+        "tolerance": 0.01,
+        "steps": [
+            "Find molar mass of CO₂ (44 g/mol)",
+            "Use n = m / M",
+            "Compute 22 / 44"
+        ],
+        "hints": [
+            "Recall molar mass formula",
+            "CO₂ has 1 C and 2 O",
+            "Use n = m / M"
+        ],
+        "common_errors": {
+            "1.0": "You used 22 instead of 44 as molar mass",
+            "0.25": "You divided by oxygen mass only"
+        }
+    }
+]
