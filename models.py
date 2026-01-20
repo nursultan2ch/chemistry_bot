@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float, Text, ForeignKey, Boolean, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
-from datetime import datetime
+from datetime import datetime, timezone
 
 Base = declarative_base()
 
@@ -16,7 +16,7 @@ class Category(Base):
     icon = Column(String(10), default="📚")  # Emoji icon
     order = Column(Integer, default=0)  # Display order
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     topics = relationship("Topic", back_populates="category", cascade="all, delete-orphan")
 
@@ -37,7 +37,7 @@ class Topic(Base):
     icon = Column(String(10), default="🔬")
     order = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     category = relationship("Category", back_populates="topics")
     problems = relationship("Problem", back_populates="topic", cascade="all, delete-orphan")
@@ -52,14 +52,14 @@ class Problem(Base):
     id = Column(Integer, primary_key=True)
     topic_id = Column(Integer, ForeignKey('topics.id'), nullable=False)
     question = Column(Text, nullable=False)
-    answer = Column(Float, nullable=False)
+    answer = Column(Text, nullable=False)
     tolerance = Column(Float, default=0.01)
     steps = Column(JSON)  # List of solution steps
     hints = Column(JSON)  # List of hints
     common_errors = Column(JSON)  # Dict mapping wrong answers to messages
     difficulty = Column(Integer, default=1)  # 1=easy, 2=medium, 3=hard
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     topic = relationship("Topic", back_populates="problems")
 
@@ -77,8 +77,8 @@ class User(Base):
     first_name = Column(String(100))
     current_topic_id = Column(Integer, ForeignKey('topics.id'))
     is_admin = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    last_active = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    last_active = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     current_topic = relationship("Topic")
     progress = relationship("UserProgress", back_populates="user", cascade="all, delete-orphan")

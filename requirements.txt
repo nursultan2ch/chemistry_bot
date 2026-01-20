@@ -12,6 +12,7 @@ psycopg2-binary==2.9.10
 Flask==3.1.0
 Flask-Admin==1.6.1
 Flask-BasicAuth==0.2.0
+gunicorn==23.0.0
 
 # HTTP (for telegram-bot)
 httpx==0.28.1

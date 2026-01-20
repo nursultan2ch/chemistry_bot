@@ -1,6 +1,6 @@
 import os
 import random
-from datetime import datetime
+from datetime import datetime, timezone
 from contextlib import contextmanager
 from dotenv import load_dotenv
 
@@ -156,7 +156,7 @@ def get_or_create_user(telegram_id: int, username: str = None, first_name: str =
             session.add(user)
             session.flush()
         else:
-            user.last_active = datetime.utcnow()
+            user.last_active = datetime.now(timezone.utc)
             if username:
                 user.username = username
             if first_name:
@@ -215,7 +215,7 @@ def record_attempt(telegram_id: int, problem_id: int, solved: bool = False, hint
         ).first()
 
         if not progress:
-            progress = UserProgress(user_id=user.id, problem_id=problem_id)
+            progress = UserProgress(user_id=user.id, problem_id=problem_id, attempts=0, hints_used=0)
             session.add(progress)
 
         progress.attempts += 1
@@ -223,7 +223,7 @@ def record_attempt(telegram_id: int, problem_id: int, solved: bool = False, hint
             progress.hints_used += 1
         if solved:
             progress.solved = True
-            progress.solved_at = datetime.utcnow()
+            progress.solved_at = datetime.now(timezone.utc)
 
 
 def get_solved_problem_ids(telegram_id: int, topic_id: int):
@@ -275,8 +275,9 @@ def seed_initial_data():
         organic = Category(name="Organic Chemistry", description="Carbon-based compounds", icon="🔬", order=2)
         inorganic = Category(name="Inorganic Chemistry", description="Non-carbon compounds", icon="⚗️", order=3)
         physical = Category(name="Physical Chemistry", description="Physics meets chemistry", icon="📊", order=4)
+        biochem = Category(name="Biochemistry", description="Chemistry of living systems", icon="🧬", order=5)
 
-        session.add_all([general, organic, inorganic, physical])
+        session.add_all([general, organic, inorganic, physical, biochem])
         session.flush()
 
         # Create topics for General Chemistry
@@ -287,6 +288,7 @@ def seed_initial_data():
             Topic(category_id=general.id, name="Chemical Bonding", description="How atoms bond", icon="🔗", order=4),
             Topic(category_id=general.id, name="Solutions", description="Mixtures and concentrations", icon="🧪", order=5),
         ]
+        
 
         # Create topics for Organic Chemistry
         topics_organic = [
@@ -298,33 +300,8 @@ def seed_initial_data():
         session.add_all(topics_general + topics_organic)
         session.flush()
 
-        # Add sample problem (from original JSON)
-        stoich_topic = session.query(Topic).filter(Topic.name == "Stoichiometry").first()
-        if stoich_topic:
-            problem = Problem(
-                topic_id=stoich_topic.id,
-                question="How many moles are in 22 g of CO2?",
-                answer=0.5,
-                tolerance=0.01,
-                steps=[
-                    "Find molar mass of CO2 (44 g/mol)",
-                    "Use n = m / M",
-                    "Compute 22 / 44"
-                ],
-                hints=[
-                    "Recall molar mass formula",
-                    "CO2 has 1 C and 2 O",
-                    "Use n = m / M"
-                ],
-                common_errors={
-                    "1.0": "You used 22 instead of 44 as molar mass",
-                    "0.25": "You divided by oxygen mass only"
-                },
-                difficulty=1
-            )
-            session.add(problem)
-
-        print("Database seeded with initial data!")
+        print("Database seeded with categories and topics!")
+        print("Use the admin panel (python admin.py) to add problems.")
 
 
 if __name__ == "__main__":
