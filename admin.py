@@ -1,38 +1,58 @@
+import hmac
 import os
-from flask import Flask, redirect, url_for, request
+import sys
+from flask import Flask, Response, redirect, request
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from flask_basicauth import BasicAuth
+from sqlalchemy.orm import scoped_session
 from dotenv import load_dotenv
 
-from models import init_db, Category, Topic, Problem, User, UserProgress
+from datetime import timedelta
+
+from models import init_db, utcnow, Category, Topic, Problem, User, UserProgress
 
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://localhost/chemistry_bot")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "changeme")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not ADMIN_PASSWORD or not SECRET_KEY:
+    sys.exit("ADMIN_PASSWORD and SECRET_KEY must be set (see .env.example)")
 
 # Initialize Flask app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
-app.config['BASIC_AUTH_USERNAME'] = ADMIN_USERNAME
-app.config['BASIC_AUTH_PASSWORD'] = ADMIN_PASSWORD
-app.config['BASIC_AUTH_FORCE'] = True
+app.config['SECRET_KEY'] = SECRET_KEY
 
-basic_auth = BasicAuth(app)
-
-# Initialize database
+# Initialize database; one session per request instead of one shared by every request
 engine, Session = init_db(DATABASE_URL)
-session = Session()
+session = scoped_session(Session)
+
+
+# ============ Authentication ============
+
+def _credentials_ok(auth):
+    return (
+        auth is not None
+        and hmac.compare_digest(auth.username or "", ADMIN_USERNAME)
+        and hmac.compare_digest(auth.password or "", ADMIN_PASSWORD)
+    )
+
+
+@app.before_request
+def require_basic_auth():
+    if request.path == '/healthz':
+        return None
+    if not _credentials_ok(request.authorization):
+        return Response('Login required', 401, {'WWW-Authenticate': 'Basic realm="Chemistry Bot Admin"'})
+    return None
 
 
 # ============ Custom Admin Views ============
 
 class SecureModelView(ModelView):
-    """Base view with authentication"""
-    def is_accessible(self):
-        return True  # BasicAuth handles this at app level
+    """Base view; every request is already authenticated by require_basic_auth"""
 
     column_display_pk = True
     can_export = True
@@ -71,7 +91,7 @@ class TopicView(SecureModelView):
 
 class ProblemView(SecureModelView):
     """Admin view for problems"""
-    column_list = ['id', 'topic', 'question', 'answer', 'difficulty', 'is_active']
+    column_list = ['id', 'topic', 'question', 'answer', 'unit', 'difficulty', 'is_active']
     column_searchable_list = ['question']
     column_filters = ['topic', 'difficulty', 'is_active']
     column_editable_list = ['difficulty', 'is_active']
@@ -79,6 +99,7 @@ class ProblemView(SecureModelView):
 
     column_labels = {
         'topic': 'Topic',
+        'unit': 'Answer Unit',
         'tolerance': 'Answer Tolerance (±)',
         'steps': 'Solution Steps (JSON list)',
         'hints': 'Hints (JSON list)',
@@ -93,6 +114,7 @@ class ProblemView(SecureModelView):
     }
 
     column_descriptions = {
+        'unit': 'Shown to students, e.g. "g" or "kJ/mol"',
         'tolerance': 'Acceptable error margin for answers',
         'steps': 'Enter as JSON list: ["Step 1", "Step 2"]',
         'hints': 'Enter as JSON list: ["Hint 1", "Hint 2"]',
@@ -108,7 +130,7 @@ class UserView(SecureModelView):
     column_editable_list = ['is_admin']
     can_create = False
     can_delete = False
-    form_excluded_columns = ['progress', 'current_topic']
+    form_excluded_columns = ['progress', 'current_topic', 'current_problem', 'hint_index']
 
 
 class UserProgressView(SecureModelView):
@@ -128,6 +150,7 @@ class DashboardView(AdminIndexView):
             'topics': session.query(Topic).count(),
             'problems': session.query(Problem).count(),
             'users': session.query(User).count(),
+            'active_week': session.query(User).filter(User.last_active >= utcnow() - timedelta(days=7)).count(),
             'solved': session.query(UserProgress).filter(UserProgress.solved == True).count()
         }
         return self.render('admin/dashboard.html', stats=stats)
@@ -150,78 +173,21 @@ admin.add_view(UserView(User, session, name='Users', category='Users'))
 admin.add_view(UserProgressView(UserProgress, session, name='Progress', category='Users'))
 
 
-# ============ Custom Templates ============
+# ============ Routes ============
 
 @app.route('/')
 def index():
     return redirect('/admin')
 
 
-# Create custom dashboard template
-import os
-templates_dir = os.path.join(os.path.dirname(__file__), 'templates', 'admin')
-os.makedirs(templates_dir, exist_ok=True)
+@app.route('/healthz')
+def healthz():
+    return 'ok'
 
-dashboard_template = '''
-{% extends 'admin/master.html' %}
-{% block body %}
-<div class="container-fluid">
-    <h1>Dashboard</h1>
-    <div class="row mt-4">
-        <div class="col-md-4 mb-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <h2>{{ stats.categories }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Topics</h5>
-                    <h2>{{ stats.topics }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Problems</h5>
-                    <h2>{{ stats.problems }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title">Users</h5>
-                    <h2>{{ stats.users }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card bg-secondary text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Problems Solved</h5>
-                    <h2>{{ stats.solved }}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <h3>Quick Links</h3>
-    <ul>
-        <li><a href="/admin/category/new/">Add New Category</a></li>
-        <li><a href="/admin/topic/new/">Add New Topic</a></li>
-        <li><a href="/admin/problem/new/">Add New Problem</a></li>
-    </ul>
-</div>
-{% endblock %}
-'''
 
-with open(os.path.join(templates_dir, 'dashboard.html'), 'w') as f:
-    f.write(dashboard_template)
+@app.teardown_appcontext
+def remove_session(exc=None):
+    session.remove()
 
 
 if __name__ == '__main__':

@@ -1,0 +1,32 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<div class="container-fluid">
+    <h1>Dashboard</h1>
+    <div class="row mt-4">
+        {% for label, value, style in [
+            ('Categories', stats.categories, 'bg-primary text-white'),
+            ('Topics', stats.topics, 'bg-success text-white'),
+            ('Problems', stats.problems, 'bg-info text-white'),
+            ('Users', stats.users, 'bg-warning'),
+            ('Active last 7 days', stats.active_week, 'bg-dark text-white'),
+            ('Problems Solved', stats.solved, 'bg-secondary text-white'),
+        ] %}
+        <div class="col-md-4 mb-3">
+            <div class="card {{ style }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ label }}</h5>
+                    <h2>{{ value }}</h2>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <h3>Quick Links</h3>
+    <ul>
+        <li><a href="{{ url_for('category.create_view') }}">Add New Category</a></li>
+        <li><a href="{{ url_for('topic.create_view') }}">Add New Topic</a></li>
+        <li><a href="{{ url_for('problem.create_view') }}">Add New Problem</a></li>
+    </ul>
+</div>
+{% endblock %}

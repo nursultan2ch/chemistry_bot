@@ -26,5 +26,6 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Templates (auto-generated)
-templates/
+
+# Tests
+.pytest_cache/

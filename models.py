@@ -1,9 +1,12 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Text, ForeignKey, Boolean, DateTime, JSON
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
-from datetime import datetime
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, Float, Text, ForeignKey, Boolean, DateTime, JSON, UniqueConstraint
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from datetime import datetime, timezone
 
 Base = declarative_base()
+
+
+def utcnow():
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
 class Category(Base):
@@ -16,10 +19,9 @@ class Category(Base):
     icon = Column(String(10), default="📚")  # Emoji icon
     order = Column(Integer, default=0)  # Display order
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     topics = relationship("Topic", back_populates="category", cascade="all, delete-orphan")
-
 
     def __repr__(self):
         return f"{self.icon} {self.name}"
@@ -28,7 +30,7 @@ class Category(Base):
 class Topic(Base):
     """Topics within a category (e.g., Stoichiometry, Mole Concept)"""
     __tablename__ = 'topics'
-
+    __table_args__ = (UniqueConstraint('category_id', 'name'),)
 
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
@@ -37,13 +39,14 @@ class Topic(Base):
     icon = Column(String(10), default="🔬")
     order = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     category = relationship("Category", back_populates="topics")
     problems = relationship("Problem", back_populates="topic", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"{self.icon} {self.name}"
+
 
 class Problem(Base):
     """Chemistry problems/questions"""
@@ -53,13 +56,14 @@ class Problem(Base):
     topic_id = Column(Integer, ForeignKey('topics.id'), nullable=False)
     question = Column(Text, nullable=False)
     answer = Column(Float, nullable=False)
+    unit = Column(String(30))  # Shown to the student, e.g. "g" or "kJ/mol"
     tolerance = Column(Float, default=0.01)
     steps = Column(JSON)  # List of solution steps
     hints = Column(JSON)  # List of hints
     common_errors = Column(JSON)  # Dict mapping wrong answers to messages
     difficulty = Column(Integer, default=1)  # 1=easy, 2=medium, 3=hard
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     topic = relationship("Topic", back_populates="problems")
 
@@ -67,28 +71,35 @@ class Problem(Base):
         q = self.question[:50] if self.question else ""
         return f"Problem #{self.id}: {q}..."
 
+
 class User(Base):
     """Telegram users"""
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    telegram_id = Column(Integer, unique=True, nullable=False)
+    telegram_id = Column(BigInteger, unique=True, nullable=False)  # Telegram ids exceed 32 bits
     username = Column(String(100))
     first_name = Column(String(100))
     current_topic_id = Column(Integer, ForeignKey('topics.id'))
+    # Problem currently being solved, kept in the DB so a restart doesn't lose it
+    current_problem_id = Column(Integer, ForeignKey('problems.id'))
+    hint_index = Column(Integer, default=0)
     is_admin = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    last_active = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
+    last_active = Column(DateTime, default=utcnow)
 
     current_topic = relationship("Topic")
+    current_problem = relationship("Problem")
     progress = relationship("UserProgress", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"@{self.username}" if self.username else f"{self.first_name or self.telegram_id}"
 
+
 class UserProgress(Base):
     """Track user's progress on problems"""
     __tablename__ = 'user_progress'
+    __table_args__ = (UniqueConstraint('user_id', 'problem_id'),)
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
@@ -105,11 +116,10 @@ class UserProgress(Base):
         status = "Solved" if self.solved else f"{self.attempts} attempts"
         return f"User {self.user_id} - Problem {self.problem_id}: {status}"
 
+
 def init_db(database_url: str):
     """Initialize database and return engine + session"""
-    engine = create_engine(database_url)
+    engine = create_engine(database_url, pool_pre_ping=True)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine, expire_on_commit=False)
     return engine, Session
-
-    

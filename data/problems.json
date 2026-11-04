@@ -1,0 +1,380 @@
+[
+  {
+    "topic_name": "Stoichiometry",
+    "question": "How many moles are in 22 g of CO₂?",
+    "answer": 0.5, "unit": "mol", "tolerance": 0.01, "difficulty": 1,
+    "hints": ["Use n = m / M", "CO₂ has 1 C (12 g/mol) and 2 O (16 g/mol each)"],
+    "steps": ["M(CO₂) = 12 + 2 × 16 = 44 g/mol", "n = m / M = 22 / 44", "n = 0.5 mol"],
+    "common_errors": {"1.0": "You divided by 22 instead of the molar mass 44 g/mol", "1.375": "You divided by oxygen's mass only (16 g/mol)"}
+  },
+  {
+    "topic_name": "Stoichiometry",
+    "question": "How many grams of H₂O are produced when 4 g of H₂ react with excess O₂?\n2H₂ + O₂ → 2H₂O",
+    "answer": 36.0, "unit": "g", "tolerance": 0.5, "difficulty": 1,
+    "hints": ["First find moles of H₂ (M = 2 g/mol)", "The ratio H₂ : H₂O is 2 : 2"],
+    "steps": ["n(H₂) = 4 / 2 = 2 mol", "From the equation, 2 mol H₂ → 2 mol H₂O", "m(H₂O) = 2 × 18 = 36 g"],
+    "common_errors": {"18.0": "You calculated the mass of 1 mol of H₂O, not 2", "72.0": "Check the mole ratio: it is 2 : 2, not 1 : 2"}
+  },
+  {
+    "topic_name": "Stoichiometry",
+    "question": "10.0 g of H₂ and 64.0 g of O₂ react.\n2H₂ + O₂ → 2H₂O\nWhat mass of water forms?",
+    "answer": 72.1, "unit": "g", "tolerance": 0.5, "difficulty": 2,
+    "hints": ["Find moles of both reactants", "Which reactant runs out first? That is the limiting reagent"],
+    "steps": ["n(H₂) = 10.0 / 2.016 = 4.96 mol, n(O₂) = 64.0 / 32.00 = 2.00 mol", "4.96 mol H₂ would need 2.48 mol O₂, so O₂ is limiting", "n(H₂O) = 2 × 2.00 = 4.00 mol", "m(H₂O) = 4.00 × 18.02 = 72.1 g"],
+    "common_errors": {"90.0": "You used H₂ as the limiting reagent, but O₂ runs out first", "36.0": "Each mol of O₂ gives 2 mol of H₂O"}
+  },
+  {
+    "topic_name": "Stoichiometry",
+    "question": "Heating 50.0 g of CaCO₃ gives 22.0 g of CaO.\nCaCO₃ → CaO + CO₂\nWhat is the percent yield?",
+    "answer": 78.5, "unit": "%", "tolerance": 0.5, "difficulty": 2,
+    "hints": ["Find the theoretical mass of CaO first", "M(CaCO₃) = 100.1 g/mol, M(CaO) = 56.08 g/mol"],
+    "steps": ["n(CaCO₃) = 50.0 / 100.1 = 0.500 mol", "Theoretical m(CaO) = 0.500 × 56.08 = 28.0 g", "Yield = 22.0 / 28.0 × 100% = 78.5%"],
+    "common_errors": {"44.0": "You divided by the mass of CaCO₃; compare with the theoretical mass of CaO"}
+  },
+  {
+    "topic_name": "Stoichiometry",
+    "question": "Burning 0.300 g of a hydrocarbon gives 0.880 g of CO₂ and 0.540 g of H₂O. Its molar mass is 30 g/mol.\nHow many hydrogen atoms are in one molecule?",
+    "answer": 6, "unit": "atoms", "tolerance": 0, "difficulty": 3,
+    "hints": ["All the carbon ends up in CO₂ and all the hydrogen in H₂O", "Each H₂O carries 2 H atoms", "Find the empirical formula, then scale it to M = 30"],
+    "steps": ["n(C) = n(CO₂) = 0.880 / 44.01 = 0.0200 mol", "n(H) = 2 × 0.540 / 18.02 = 0.0600 mol", "C : H = 1 : 3, so the empirical formula is CH₃ (15 g/mol)", "30 / 15 = 2, so the molecule is C₂H₆ with 6 H atoms"],
+    "common_errors": {"3.0": "That is the empirical formula CH₃; scale it up to M = 30 g/mol"}
+  },
+  {
+    "topic_name": "Mole Concept",
+    "question": "How many molecules are in 0.5 mol of CO₂?",
+    "answer": 3.01e23, "unit": "molecules", "tolerance": 0.02e23, "difficulty": 1,
+    "hints": ["Use Avogadro's number, 6.022 × 10²³ mol⁻¹", "You can type 3.01e23"],
+    "steps": ["N = n × Nₐ", "N = 0.5 × 6.022 × 10²³", "N = 3.01 × 10²³ molecules"],
+    "common_errors": {"9.03e23": "You counted atoms (3 per molecule), not molecules"}
+  },
+  {
+    "topic_name": "Mole Concept",
+    "question": "What is the molar mass of H₂SO₄?",
+    "answer": 98.1, "unit": "g/mol", "tolerance": 0.5, "difficulty": 1,
+    "hints": ["H = 1, S = 32, O = 16", "Count atoms: 2 H + 1 S + 4 O"],
+    "steps": ["H: 2 × 1 = 2", "S: 1 × 32 = 32", "O: 4 × 16 = 64", "Total = 98 g/mol"],
+    "common_errors": {"66.0": "You counted only 2 oxygen atoms; H₂SO₄ has 4", "97.0": "There are 2 hydrogen atoms, not 1"}
+  },
+  {
+    "topic_name": "Mole Concept",
+    "question": "How many atoms in total are in 9.0 g of water?",
+    "answer": 9.03e23, "unit": "atoms", "tolerance": 0.05e23, "difficulty": 2,
+    "hints": ["First find moles of H₂O", "Each H₂O molecule has 3 atoms"],
+    "steps": ["n(H₂O) = 9.0 / 18.02 = 0.50 mol", "Molecules = 0.50 × 6.022 × 10²³ = 3.01 × 10²³", "Atoms = 3 × 3.01 × 10²³ = 9.03 × 10²³"],
+    "common_errors": {"3.01e23": "That is the number of molecules; each has 3 atoms"}
+  },
+  {
+    "topic_name": "Mole Concept",
+    "question": "What is the mass of a single glucose (C₆H₁₂O₆, 180.2 g/mol) molecule in grams?",
+    "answer": 2.99e-22, "unit": "g", "tolerance": 0.02e-22, "difficulty": 2,
+    "hints": ["One mole weighs 180.2 g and contains Nₐ molecules", "Type it like 2.99e-22"],
+    "steps": ["m = M / Nₐ", "m = 180.2 / 6.022 × 10²³", "m = 2.99 × 10⁻²² g"]
+  },
+  {
+    "topic_name": "Mole Concept",
+    "question": "What is the mass percentage of nitrogen in NH₄NO₃?",
+    "answer": 35.0, "unit": "%", "tolerance": 0.3, "difficulty": 2,
+    "hints": ["NH₄NO₃ contains two nitrogen atoms", "M(NH₄NO₃) = 80.04 g/mol"],
+    "steps": ["m(N) = 2 × 14.01 = 28.02 g per mol", "w(N) = 28.02 / 80.04 × 100%", "w(N) = 35.0%"],
+    "common_errors": {"17.5": "There are two nitrogen atoms: one in NH₄⁺ and one in NO₃⁻"}
+  },
+  {
+    "topic_name": "Atomic Structure",
+    "question": "How many neutrons are in a uranium-235 nucleus? (Z = 92)",
+    "answer": 143, "unit": "neutrons", "tolerance": 0, "difficulty": 1,
+    "hints": ["Mass number = protons + neutrons"],
+    "steps": ["N = A − Z", "N = 235 − 92 = 143"],
+    "common_errors": {"92.0": "92 is the number of protons", "327.0": "Subtract Z from A; don't add them"}
+  },
+  {
+    "topic_name": "Atomic Structure",
+    "question": "What is the maximum number of electrons in the n = 3 shell?",
+    "answer": 18, "unit": "electrons", "tolerance": 0, "difficulty": 1,
+    "hints": ["The capacity of shell n is 2n²", "Or count it up: 3s + 3p + 3d"],
+    "steps": ["Capacity = 2n²", "2 × 3² = 18", "Check: 3s (2) + 3p (6) + 3d (10) = 18"],
+    "common_errors": {"8.0": "8 is only 3s + 3p; the n = 3 shell also has 3d orbitals", "9.0": "There are 9 orbitals, each holding 2 electrons"}
+  },
+  {
+    "topic_name": "Atomic Structure",
+    "question": "How many unpaired electrons does a ground-state Fe atom have? (Z = 26)",
+    "answer": 4, "unit": "electrons", "tolerance": 0, "difficulty": 2,
+    "hints": ["Write the configuration: [Ar] 4s² 3d⁶", "Apply Hund's rule to the five 3d orbitals"],
+    "steps": ["Fe: [Ar] 4s² 3d⁶", "Five 3d orbitals: put one electron in each first (5), then pair one (6)", "That leaves 4 unpaired electrons"],
+    "common_errors": {"6.0": "Six electrons in five orbitals: one orbital must hold a pair", "2.0": "Fill each orbital singly before pairing (Hund's rule)"}
+  },
+  {
+    "topic_name": "Atomic Structure",
+    "question": "What is the energy of one mole of photons with wavelength 500 nm?",
+    "answer": 239.3, "unit": "kJ/mol", "tolerance": 1.0, "difficulty": 3,
+    "hints": ["E = hc / λ for one photon", "h = 6.626 × 10⁻³⁴ J·s, c = 2.998 × 10⁸ m/s", "Multiply by Nₐ and convert J to kJ"],
+    "steps": ["E(photon) = (6.626 × 10⁻³⁴ × 2.998 × 10⁸) / (500 × 10⁻⁹) = 3.97 × 10⁻¹⁹ J", "E(mol) = 3.97 × 10⁻¹⁹ × 6.022 × 10²³ = 2.39 × 10⁵ J", "E = 239.3 kJ/mol"],
+    "common_errors": {"239300.0": "That's in J/mol; the answer is in kJ/mol"}
+  },
+  {
+    "topic_name": "Solutions",
+    "question": "What mass of NaCl is needed to prepare 500 mL of a 0.5 M solution?",
+    "answer": 14.6, "unit": "g", "tolerance": 0.2, "difficulty": 1,
+    "hints": ["n = C × V, with V in litres", "M(NaCl) = 58.44 g/mol"],
+    "steps": ["V = 500 mL = 0.5 L", "n = 0.5 × 0.5 = 0.25 mol", "m = 0.25 × 58.44 = 14.6 g"],
+    "common_errors": {"29.2": "You forgot to multiply by the volume (0.5 L)", "14610.0": "Convert mL to L before multiplying"}
+  },
+  {
+    "topic_name": "Solutions",
+    "question": "25.0 mL of 6.0 M HCl is diluted with water to 500 mL. What is the new concentration?",
+    "answer": 0.30, "unit": "M", "tolerance": 0.005, "difficulty": 1,
+    "hints": ["Moles of HCl don't change on dilution", "C₁V₁ = C₂V₂"],
+    "steps": ["C₂ = C₁V₁ / V₂", "C₂ = 6.0 × 25.0 / 500", "C₂ = 0.30 M"],
+    "common_errors": {"120.0": "You inverted the ratio; the solution gets more dilute"}
+  },
+  {
+    "topic_name": "Solutions",
+    "question": "20.0 g of NaOH is dissolved in 180 g of water. What is the mass percentage of NaOH?",
+    "answer": 10.0, "unit": "%", "tolerance": 0.1, "difficulty": 1,
+    "hints": ["Mass percent = solute mass / solution mass", "Solution mass = solute + solvent"],
+    "steps": ["m(solution) = 20.0 + 180 = 200 g", "w = 20.0 / 200 × 100%", "w = 10.0%"],
+    "common_errors": {"11.1": "Divide by the mass of the whole solution (200 g), not just the water"}
+  },
+  {
+    "topic_name": "Solutions",
+    "question": "Concentrated sulfuric acid is 98.0% H₂SO₄ by mass with density 1.84 g/mL. What is its molarity?",
+    "answer": 18.4, "unit": "M", "tolerance": 0.1, "difficulty": 3,
+    "hints": ["Take exactly 1 L of the solution", "Find the mass of 1 L, then the mass of H₂SO₄ in it", "M(H₂SO₄) = 98.08 g/mol"],
+    "steps": ["m(1 L) = 1000 × 1.84 = 1840 g", "m(H₂SO₄) = 0.980 × 1840 = 1803 g", "n = 1803 / 98.08 = 18.4 mol, so C = 18.4 M"],
+    "common_errors": {"18.76": "Only 98.0% of the solution's mass is H₂SO₄", "0.0184": "Use 1 L = 1000 mL"}
+  },
+  {
+    "topic_name": "Gas Laws",
+    "question": "What volume do 2.00 mol of an ideal gas occupy at STP (0 °C, 1 atm)?",
+    "answer": 44.8, "unit": "L", "tolerance": 0.2, "difficulty": 1,
+    "hints": ["One mole of ideal gas at STP occupies 22.4 L"],
+    "steps": ["V = n × Vₘ", "V = 2.00 × 22.4", "V = 44.8 L"],
+    "common_errors": {"49.0": "24.5 L/mol is for 25 °C; STP is 0 °C"}
+  },
+  {
+    "topic_name": "Gas Laws",
+    "question": "A gas occupies 4.00 L at 1.00 atm. At constant temperature it is compressed to 1.00 L. What is the new pressure?",
+    "answer": 4.00, "unit": "atm", "tolerance": 0.02, "difficulty": 1,
+    "hints": ["Boyle's law: P₁V₁ = P₂V₂"],
+    "steps": ["P₂ = P₁V₁ / V₂", "P₂ = 1.00 × 4.00 / 1.00", "P₂ = 4.00 atm"],
+    "common_errors": {"0.25": "Compressing a gas raises its pressure"}
+  },
+  {
+    "topic_name": "Gas Laws",
+    "question": "How many moles of gas are in a 10.0 L container at 300 K and 2.00 atm?",
+    "answer": 0.812, "unit": "mol", "tolerance": 0.01, "difficulty": 2,
+    "hints": ["PV = nRT", "R = 0.08206 L·atm/(mol·K)"],
+    "steps": ["n = PV / RT", "n = (2.00 × 10.0) / (0.08206 × 300)", "n = 0.812 mol"],
+    "common_errors": {"0.00802": "With pressure in atm and volume in L, use R = 0.08206, not 8.314"}
+  },
+  {
+    "topic_name": "Gas Laws",
+    "question": "A gas has a density of 1.25 g/L at STP. What is its molar mass?",
+    "answer": 28.0, "unit": "g/mol", "tolerance": 0.3, "difficulty": 2,
+    "hints": ["One mole occupies 22.4 L at STP", "M = ρ × Vₘ"],
+    "steps": ["M = 1.25 g/L × 22.4 L/mol", "M = 28.0 g/mol (e.g. N₂ or CO)"],
+    "common_errors": {"17.9": "Multiply density by molar volume; don't divide"}
+  },
+  {
+    "topic_name": "Hydrocarbons",
+    "question": "How many structural isomers does pentane (C₅H₁₂) have?",
+    "answer": 3, "unit": "isomers", "tolerance": 0, "difficulty": 1,
+    "hints": ["Start with the straight chain, then shorten it by one carbon at a time"],
+    "steps": ["n-pentane (5-carbon chain)", "2-methylbutane (4-carbon chain)", "2,2-dimethylpropane (3-carbon chain)", "Total: 3"]
+  },
+  {
+    "topic_name": "Hydrocarbons",
+    "question": "How many structural isomers does hexane (C₆H₁₄) have?",
+    "answer": 5, "unit": "isomers", "tolerance": 0, "difficulty": 2,
+    "hints": ["Main chains of 6, 5 and 4 carbons are possible", "Watch for duplicates: 2-methyl and 4-methyl pentane are the same"],
+    "steps": ["n-hexane", "2-methylpentane, 3-methylpentane", "2,2-dimethylbutane, 2,3-dimethylbutane", "Total: 5"],
+    "common_errors": {"4.0": "Did you miss 3-methylpentane or 2,2-dimethylbutane?", "6.0": "Check for duplicates, e.g. 2-ethylbutane is really 3-methylpentane"}
+  },
+  {
+    "topic_name": "Hydrocarbons",
+    "question": "How many moles of O₂ are needed to burn 1 mol of propane (C₃H₈) completely?",
+    "answer": 5, "unit": "mol", "tolerance": 0, "difficulty": 1,
+    "hints": ["Products are CO₂ and H₂O", "Balance C, then H, then O"],
+    "steps": ["C₃H₈ + ? O₂ → 3CO₂ + 4H₂O", "O atoms on the right: 3 × 2 + 4 = 10", "O₂ needed = 10 / 2 = 5 mol"],
+    "common_errors": {"10.0": "10 is oxygen atoms; O₂ molecules have 2 each"}
+  },
+  {
+    "topic_name": "Hydrocarbons",
+    "question": "What mass of water forms when 8.0 g of methane burns completely?\nCH₄ + 2O₂ → CO₂ + 2H₂O",
+    "answer": 18.0, "unit": "g", "tolerance": 0.2, "difficulty": 2,
+    "hints": ["n(CH₄) = m / M, with M = 16.04 g/mol", "1 mol CH₄ gives 2 mol H₂O"],
+    "steps": ["n(CH₄) = 8.0 / 16.04 = 0.50 mol", "n(H₂O) = 2 × 0.50 = 1.0 mol", "m(H₂O) = 1.0 × 18.02 = 18.0 g"],
+    "common_errors": {"9.0": "Each CH₄ gives 2 H₂O, not 1"}
+  },
+  {
+    "topic_name": "Functional Groups",
+    "question": "What is the degree of unsaturation (rings + π bonds) of benzene, C₆H₆?",
+    "answer": 4, "unit": "", "tolerance": 0, "difficulty": 1,
+    "hints": ["DoU = (2C + 2 + N − H − X) / 2"],
+    "steps": ["DoU = (2 × 6 + 2 − 6) / 2", "DoU = 4 (one ring + three C=C)"],
+    "common_errors": {"3.0": "Don't forget the ring counts as one"}
+  },
+  {
+    "topic_name": "Functional Groups",
+    "question": "What is the degree of unsaturation of C₄H₈O?",
+    "answer": 1, "unit": "", "tolerance": 0, "difficulty": 1,
+    "hints": ["Oxygen does not change the formula", "DoU = (2C + 2 − H) / 2"],
+    "steps": ["Ignore O", "DoU = (2 × 4 + 2 − 8) / 2", "DoU = 1 (e.g. butanal, butanone, or a cyclic ether)"]
+  },
+  {
+    "topic_name": "Functional Groups",
+    "question": "What is the mass percentage of oxygen in ethanol, C₂H₅OH?",
+    "answer": 34.7, "unit": "%", "tolerance": 0.3, "difficulty": 1,
+    "hints": ["M(C₂H₅OH) = 46.07 g/mol", "Ethanol has one oxygen atom"],
+    "steps": ["w(O) = 16.00 / 46.07 × 100%", "w(O) = 34.7%"]
+  },
+  {
+    "topic_name": "Functional Groups",
+    "question": "How many moles of NaOH are needed to fully saponify 1 mol of a triglyceride?",
+    "answer": 3, "unit": "mol", "tolerance": 0, "difficulty": 2,
+    "hints": ["A triglyceride is a triester of glycerol", "Each ester group uses one OH⁻"],
+    "steps": ["Triglyceride has 3 ester groups", "Each needs 1 NaOH", "Total: 3 mol NaOH, giving glycerol + 3 soap molecules"]
+  },
+  {
+    "topic_name": "Redox",
+    "question": "What is the oxidation state of Mn in KMnO₄?",
+    "answer": 7, "unit": "", "tolerance": 0, "difficulty": 1,
+    "hints": ["K is +1, O is −2", "The compound is neutral"],
+    "steps": ["(+1) + x + 4(−2) = 0", "x = +7"],
+    "common_errors": {"8.0": "Don't forget potassium's +1"}
+  },
+  {
+    "topic_name": "Redox",
+    "question": "What is the oxidation state of Cr in K₂Cr₂O₇?",
+    "answer": 6, "unit": "", "tolerance": 0, "difficulty": 1,
+    "hints": ["There are two Cr atoms", "2(+1) + 2x + 7(−2) = 0"],
+    "steps": ["2 + 2x − 14 = 0", "2x = 12", "x = +6"],
+    "common_errors": {"12.0": "That's the total for both Cr atoms; divide by 2"}
+  },
+  {
+    "topic_name": "Redox",
+    "question": "How many electrons are gained per Mn when MnO₄⁻ is reduced to Mn²⁺ in acid?",
+    "answer": 5, "unit": "electrons", "tolerance": 0, "difficulty": 2,
+    "hints": ["Find the oxidation state of Mn before and after"],
+    "steps": ["Mn in MnO₄⁻: +7", "Mn in Mn²⁺: +2", "Change = 5 electrons gained", "MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O"],
+    "common_errors": {"3.0": "That's for MnO₂ (+4) in neutral solution; here the product is Mn²⁺"}
+  },
+  {
+    "topic_name": "Redox",
+    "question": "What is the average oxidation state of S in sodium thiosulfate, Na₂S₂O₃?",
+    "answer": 2, "unit": "", "tolerance": 0, "difficulty": 2,
+    "hints": ["Na is +1, O is −2", "There are two S atoms"],
+    "steps": ["2(+1) + 2x + 3(−2) = 0", "2x = 4", "x = +2 (on average)"],
+    "common_errors": {"4.0": "That's the total for both S atoms; divide by 2"}
+  },
+  {
+    "topic_name": "Thermochemistry",
+    "question": "How much heat is needed to warm 200 g of water from 25 °C to 75 °C? (c = 4.18 J/(g·K))",
+    "answer": 41.8, "unit": "kJ", "tolerance": 0.2, "difficulty": 1,
+    "hints": ["q = m·c·ΔT", "Convert J to kJ"],
+    "steps": ["ΔT = 75 − 25 = 50 K", "q = 200 × 4.18 × 50 = 41 800 J", "q = 41.8 kJ"],
+    "common_errors": {"41800.0": "That's in J; the answer is in kJ", "62.7": "ΔT is 50 K, not 75 K"}
+  },
+  {
+    "topic_name": "Thermochemistry",
+    "question": "Given:\nC + O₂ → CO₂   ΔH = −393.5 kJ/mol\nCO + ½O₂ → CO₂   ΔH = −283.0 kJ/mol\nFind ΔH for C + ½O₂ → CO.",
+    "answer": -110.5, "unit": "kJ/mol", "tolerance": 0.5, "difficulty": 2,
+    "hints": ["Hess's law: combine the reactions", "Reverse the second reaction (flip the sign of ΔH)"],
+    "steps": ["C + O₂ → CO₂   −393.5", "CO₂ → CO + ½O₂   +283.0", "Sum: C + ½O₂ → CO, ΔH = −110.5 kJ/mol"],
+    "common_errors": {"-676.5": "Reverse the second reaction before adding", "110.5": "Check the sign"}
+  },
+  {
+    "topic_name": "Thermochemistry",
+    "question": "How much heat is released when 4.0 g of methane burns? (ΔH°c = −890 kJ/mol)",
+    "answer": 222, "unit": "kJ", "tolerance": 2, "difficulty": 2,
+    "hints": ["Find moles of CH₄ (M = 16.04 g/mol)", "Heat released = n × |ΔH|"],
+    "steps": ["n = 4.0 / 16.04 = 0.249 mol", "q = 0.249 × 890", "q = 222 kJ released"],
+    "common_errors": {"3560.0": "Divide the mass by molar mass; don't multiply"}
+  },
+  {
+    "topic_name": "Acids and Bases",
+    "question": "What is the pH of 0.010 M HCl?",
+    "answer": 2.00, "unit": "", "tolerance": 0.02, "difficulty": 1,
+    "hints": ["HCl is a strong acid: [H⁺] = C", "pH = −log[H⁺]"],
+    "steps": ["[H⁺] = 0.010 M", "pH = −log(0.010) = 2.00"]
+  },
+  {
+    "topic_name": "Acids and Bases",
+    "question": "What is the pH of 0.0010 M NaOH at 25 °C?",
+    "answer": 11.00, "unit": "", "tolerance": 0.02, "difficulty": 1,
+    "hints": ["Find pOH first", "pH + pOH = 14"],
+    "steps": ["[OH⁻] = 0.0010 M", "pOH = 3.00", "pH = 14 − 3.00 = 11.00"],
+    "common_errors": {"3.0": "That's the pOH; pH = 14 − pOH"}
+  },
+  {
+    "topic_name": "Acids and Bases",
+    "question": "What is the pH of 0.10 M acetic acid? (Ka = 1.8 × 10⁻⁵)",
+    "answer": 2.87, "unit": "", "tolerance": 0.03, "difficulty": 2,
+    "hints": ["Acetic acid is weak: [H⁺] ≈ √(Ka·C)"],
+    "steps": ["[H⁺] = √(1.8 × 10⁻⁵ × 0.10) = 1.34 × 10⁻³ M", "pH = −log(1.34 × 10⁻³)", "pH = 2.87"],
+    "common_errors": {"1.0": "Acetic acid is weak, so it doesn't fully dissociate", "4.74": "That's the pKa; use √(Ka·C) for [H⁺]"}
+  },
+  {
+    "topic_name": "Acids and Bases",
+    "question": "A buffer contains 0.10 M CH₃COOH and 0.20 M CH₃COONa. What is its pH? (pKa = 4.74)",
+    "answer": 5.04, "unit": "", "tolerance": 0.02, "difficulty": 2,
+    "hints": ["Henderson–Hasselbalch: pH = pKa + log([A⁻]/[HA])"],
+    "steps": ["pH = 4.74 + log(0.20 / 0.10)", "pH = 4.74 + 0.30", "pH = 5.04"],
+    "common_errors": {"4.44": "The ratio is [A⁻]/[HA], not [HA]/[A⁻]"}
+  },
+  {
+    "topic_name": "Kinetics",
+    "question": "A first-order reaction has k = 0.0231 min⁻¹. What is its half-life?",
+    "answer": 30.0, "unit": "min", "tolerance": 0.3, "difficulty": 1,
+    "hints": ["For first order, t½ = ln 2 / k"],
+    "steps": ["t½ = 0.693 / 0.0231", "t½ = 30.0 min"],
+    "common_errors": {"43.3": "That's 1/k; for first order t½ = ln 2 / k"}
+  },
+  {
+    "topic_name": "Kinetics",
+    "question": "What percentage of a radioactive sample remains after 3 half-lives?",
+    "answer": 12.5, "unit": "%", "tolerance": 0.1, "difficulty": 1,
+    "hints": ["Each half-life halves the amount"],
+    "steps": ["100% → 50% → 25% → 12.5%", "Or: (½)³ = 1/8 = 12.5%"],
+    "common_errors": {"33.3": "Each half-life halves the amount, not subtracts a third"}
+  },
+  {
+    "topic_name": "Kinetics",
+    "question": "The rate law is rate = k[A]². By what factor does the rate increase if [A] is doubled?",
+    "answer": 4, "unit": "times", "tolerance": 0, "difficulty": 1,
+    "hints": ["Substitute 2[A] into the rate law"],
+    "steps": ["rate' = k(2[A])² = 4k[A]²", "The rate increases 4 times"],
+    "common_errors": {"2.0": "The reaction is second order in A, so square the factor"}
+  },
+  {
+    "topic_name": "Kinetics",
+    "question": "A reaction has Eₐ = 50 kJ/mol. By what factor does k increase when temperature rises from 300 K to 310 K?",
+    "answer": 1.91, "unit": "times", "tolerance": 0.03, "difficulty": 3,
+    "hints": ["Arrhenius: ln(k₂/k₁) = (Eₐ/R)(1/T₁ − 1/T₂)", "Use Eₐ in J/mol and R = 8.314 J/(mol·K)"],
+    "steps": ["1/300 − 1/310 = 1.075 × 10⁻⁴ K⁻¹", "ln(k₂/k₁) = (50 000 / 8.314) × 1.075 × 10⁻⁴ = 0.647", "k₂/k₁ = e^0.647 = 1.91"],
+    "common_errors": {"1.0": "Use Eₐ in J/mol (50 000), not kJ/mol"}
+  },
+  {
+    "topic_name": "Electrochemistry",
+    "question": "What is E°cell for a Zn/Cu galvanic cell? (E°(Zn²⁺/Zn) = −0.76 V, E°(Cu²⁺/Cu) = +0.34 V)",
+    "answer": 1.10, "unit": "V", "tolerance": 0.01, "difficulty": 1,
+    "hints": ["E°cell = E°(cathode) − E°(anode)", "Copper, with the higher potential, is the cathode"],
+    "steps": ["Cathode: Cu²⁺/Cu (+0.34 V); anode: Zn²⁺/Zn (−0.76 V)", "E°cell = 0.34 − (−0.76)", "E°cell = 1.10 V"],
+    "common_errors": {"-0.42": "Subtract the anode potential; don't add them", "-1.1": "Cathode minus anode; copper is the cathode"}
+  },
+  {
+    "topic_name": "Electrochemistry",
+    "question": "What mass of copper is deposited when 2.00 A passes through CuSO₄ solution for 965 s?",
+    "answer": 0.636, "unit": "g", "tolerance": 0.01, "difficulty": 2,
+    "hints": ["Charge Q = I × t", "F = 96 485 C per mole of electrons", "Cu²⁺ needs 2 electrons"],
+    "steps": ["Q = 2.00 × 965 = 1930 C", "n(e⁻) = 1930 / 96 485 = 0.0200 mol", "n(Cu) = 0.0200 / 2 = 0.0100 mol", "m = 0.0100 × 63.55 = 0.636 g"],
+    "common_errors": {"1.27": "Cu²⁺ needs 2 electrons per atom; divide moles of e⁻ by 2"}
+  },
+  {
+    "topic_name": "Electrochemistry",
+    "question": "Calculate ΔG° for the Zn/Cu cell (n = 2, E° = 1.10 V).",
+    "answer": -212.3, "unit": "kJ/mol", "tolerance": 1.0, "difficulty": 2,
+    "hints": ["ΔG° = −nFE°", "F = 96 485 C/mol; convert J to kJ"],
+    "steps": ["ΔG° = −2 × 96 485 × 1.10", "ΔG° = −212 267 J/mol", "ΔG° = −212.3 kJ/mol"],
+    "common_errors": {"-106.1": "Two electrons are transferred, so n = 2", "212.3": "A spontaneous cell has negative ΔG°"}
+  }
+]

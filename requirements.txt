@@ -11,7 +11,7 @@ psycopg2-binary==2.9.10
 # Admin Panel
 Flask==3.1.0
 Flask-Admin==1.6.1
-Flask-BasicAuth==0.2.0
+WTForms==3.1.2  # Flask-Admin 1.6 breaks on editable list columns with WTForms 3.2
 
 # HTTP (for telegram-bot)
 httpx==0.28.1
