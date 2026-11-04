@@ -4,8 +4,6 @@ A Telegram bot for olympiad-style chemistry practice. Students pick a topic, sol
 progressive hints, step-by-step solutions, and feedback that recognises common mistakes ("You divided by 22
 instead of the molar mass"). Teachers manage the content through a web admin panel.
 
-![tests](https://github.com/nursultan2ch/chemistry_bot/actions/workflows/tests.yml/badge.svg)
-
 ## Features
 
 - **48 problems in 12 topics** across general, organic, inorganic and physical chemistry, each with hints, a
